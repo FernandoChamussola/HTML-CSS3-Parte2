@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video</title>
+</head>
+<body>
+    <h1>Incorporação de Vídeo do YouTube</h1>
+    
+    <!-- Vídeo do YouTube incorporado -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/vyjobxq13-o?si=lU-PdrKNKrwKc8q8" 
+            title="YouTube video player" frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    </iframe>
+
+    <!-- Lista de descrição dos atributos -->
+    <h2>Descrição dos Atributos</h2>
+    <dl>
+        <dt><strong>allow</strong></dt>
+        <dd>
+            Define as permissões concedidas ao conteúdo incorporado. No caso do YouTube, 
+            pode permitir recursos como aceleração, reprodução automática, gravação na área de transferência, 
+            uso de conteúdo criptografado, giroscópio, e picture-in-picture.
+        </dd>
+
+        <dt><strong>frameborder</strong></dt>
+        <dd>
+            Especifica se o `iframe` deve ter uma borda em volta dele. Valores típicos são "0" (sem borda) e "1" (com borda). 
+            Embora esse atributo seja obsoleto em HTML5, ainda é usado para compatibilidade.
+        </dd>
+
+        <dt><strong>allowfullscreen</strong></dt>
+        <dd>
+            Indica que o `iframe` pode ser exibido em tela cheia. Esse atributo é especialmente útil para vídeos, 
+            permitindo que o usuário expanda o vídeo para ocupar toda a tela.
+        </dd>
+    </dl>
+    
+</body>
+</html>
