@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <style>
+        h1 , label {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center;
+        }
+
+        div{
+            background-color: #ccc;
+            width: 500px;
+            height: 250px;
+            border-radius: 5px;
+            margin: auto;
+            padding: 15px;
+            
+        }
+
+        input{
+            border-radius: 4px;
+            width: 93%;
+            height: 30px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        #submit{
+            background-color: green;
+            color: white;
+            width: 95%;
+
+        }
+
+        #submit:hover{
+            background-color: #45a049;
+        }
+
+        select{
+            border-radius: 4px;
+            width: 95%;
+            height: 30px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Incricao</h1>
+    <div>
+        <form action="Formulario.html">
+         <label for="name">Primeiro Nome</label><br>
+         <input type="text" placeholder="Seu nome.."><br>
+         <label for="lastname">Ultimo nome</label><br>
+         <input type="text" placeholder="Seu Apelido.."><br>
+         <label for="coutri">Pais</label><br>
+         <select name="Paises" id="p">
+            <option value="p">Mocambique</option>
+            <option value="p">Africa do sul</option>
+            <option value="p">Zambia</option>
+            <option value="p">Zimbabwe</option>
+            <option value="p">Tanzania</option>
+         </select><br>
+         <input type="submit" id="submit">
+        </form>
+    </div>
+</body>
+</html>

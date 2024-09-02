@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa</title>
+    <style>
+        #p{
+          width: 200px;
+          padding: 10px 40px;
+          border: 2px solid #ccc;
+          border-radius: 25px;
+          background-image: url('https://img.icons8.com/ios-glyphs/30/000000/search--v1.png');
+          background-position: 10px center;
+          background-repeat: no-repeat;
+          transition: width 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        #p :focus{
+         width: 300px;
+         border-color: #000;
+         outline: none;
+        }
+    </style>
+</head>
+<body>
+    <form action="Pesquisa.html">
+        <input type="search" name="pesquisa" id="p" placeholder="search..">
+    </form>
+</body>
+</html>
