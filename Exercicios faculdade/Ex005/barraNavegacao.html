@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navegacao</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        #Navegacao{
+            display: flex;
+            box-sizing: border-box;
+            width: 100%;
+            height: 30px;
+            background-color: rgb(73, 72, 72);
+            justify-content: space-around;
+        }
+
+        .opcoes a{
+            color: white;
+            text-decoration: none;
+            height: 100%;
+        }
+
+        div.opcoes:hover{
+           background-color: black;
+        }
+
+        div#sobre:hover{
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="Navegacao">
+        <div class="opcoes"><a href="#">Inicio</a></div>
+        <div class="opcoes"><a href="#">Servicos</a></div>
+        <div class="opcoes"><a href="#">Produtos</a></div>
+        <div class="opcoes"><a href="#">Contactos</a></div>
+        <div class="opcoes" id="sobre"><a href="#"> sobre nos</a></div>
+    </div>
+</body>
+</html>

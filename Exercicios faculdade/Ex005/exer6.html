@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagem com texto escondido</title>
+    <style>
+
+        body{
+            display: flex;
+        }
+        .geral{
+            margin: auto;
+        }
+
+        .d{
+            opacity: 0;
+            max-height: 0;
+             
+        }
+
+        .geral:hover{
+           
+           border: 1px solid black;
+           
+        }
+
+        .geral:hover p{
+            opacity: 1;
+           max-height: 200px;
+           width: 250px;
+        }
+
+      
+
+
+    </style>
+</head>
+<body>
+    <div class="geral">
+        <img src="img/Imagem do WhatsApp de 2024-09-04 à(s) 10.57.03_8d25c767.jpg" alt="" class="img">
+        <p class="d">Descicao da primeira imagem estaria aqui</p>
+    </div>
+    <div class="geral">
+        <img src="img/Imagem do WhatsApp de 2024-09-04 à(s) 10.57.03_f8b18510.jpg" alt="" class="img">
+        <p class="d">Descicao da seguda imagem esta aqui</p>
+    </div>
+    <div class="geral">
+        <img src="img/Imagem do WhatsApp de 2024-09-04 à(s) 10.57.04_191a5217.jpg" alt="">
+        <p class="d">descricao da terceira iagemestaria aqui</p>
+    </div>
+</body>
+</html>

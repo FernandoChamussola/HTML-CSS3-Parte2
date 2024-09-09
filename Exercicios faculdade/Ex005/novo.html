@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            width: 200px;
+            height: 30px;
+            background-color: #ccc;
+        }
+        .quadro {
+            display: flex;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: #e20074;
+            align-items: center;
+        }
+
+        .legenda {
+            height: 30PX;
+            display: flex;
+            align-items: center;
+            padding-left: 5px;
+            transition: background-color 0.3s;  
+            /* background-color: #ccc;   */
+            width:  0px;
+            text-align: center;
+            justify-content: center;
+            color: white;
+
+        }
+        .legenda:hover{
+            background-color: #e20074;
+            width: 100%;
+        }   
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quadro"><i class="ph ph-alien"></i></div>
+        <div class="legenda">
+            Legenda
+        </div>
+    </div>
+</body>
+</html>

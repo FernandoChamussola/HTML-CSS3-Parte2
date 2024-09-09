@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            font-weight: bold;
+        }
+
+        h2::before{
+            content: "tema" counter(ponto) ":";
+            counter-increment: ponto;
+        }
+
+        body{
+            counter-reset: ponto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conteudo programatico de programacao web</h1>
+
+    <h2>Introducao a programacao web</h2>
+    <h2>Linguagem de marcacao de hipertexto</h2>
+    <h2>Cascade style sheet</h2>
+    <h2>JavaScript</h2>
+    <h2>Hipertext pre-processor</h2>
+    <h2>Tecnicas avacadas de densevolvimento</h2>
+</body>
+</html>

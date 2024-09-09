@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.menu {
+    list-style-type: none;
+   
+}
+
+.menu li{
+    display: flex;
+    
+}
+
+.menu p {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    background-color: #ccc;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+    width: 200px;
+    
+}
+
+.menu li img {
+    margin-right: 10px;
+   
+}
+
+.menu p:hover {
+    background-color: #e20074; /* Cor avermelhada ao passar o mouse */
+    color: #fff;
+}
+
+.menu p:hover p {
+    color: #fff;
+}
+
+.span{
+    color: white;
+    text-align: center;
+    justify-content: center;
+}
+
+i{
+    background-color:#e20074;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

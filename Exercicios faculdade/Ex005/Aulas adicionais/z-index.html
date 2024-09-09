@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-index</title>
+    <style>
+        #d1{
+            background-color: rgb(78, 119, 11);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            z-index: 3;
+        }
+
+        #d2{
+            background-color: rgb(77, 74, 74);
+            position: absolute;
+            left: 50px;
+            top: 20px;
+            width: 100px;
+            height: 100px;
+            z-index: 2;
+        }
+
+        #d3{
+            background-color: rgb(148, 131, 64);
+            position: absolute;
+            left: 80px;
+            top: 30px;
+            width: 100px;
+            height: 100px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="d1">Essas sao divis1111</div>
+    <div id="d2">Essas sao divis2222</div>
+    <div id="d3">Essas sao divis3333</div>
+</body>
+</html>
