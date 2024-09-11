@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Pratica</title>
+        <style>
+
+            *{
+                margin: 0;
+                padding: 0;
+            }
+
+
+            #container{
+                width: 100px;
+                height: 30px;
+                background-color: #ccc;
+                display: flex;
+            }
+
+            #img{
+               height: 100%;
+               width: 30%;
+               background-color: tomato;
+            }
+
+            #msg{
+             width: 70%;
+             height: 100%;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             transition: background-color 0.5s;
+
+            }
+
+            #msg:hover{
+                background-color: tomato;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+
+        
+        <div id="container">
+            <div id="img"></div>
+            <div id="msg"><p>Home</p></div>
+        </div>
+
+        <div id="container">
+            <div id="img"></div>
+            <div id="msg"><p>Servicos</p></div>
+        </div>
+
+        <div id="container">
+            <div id="img"></div>
+            <div id="msg"><p>Sobre</p></div>
+        </div>
+
+        <div id="container">
+            <div id="img"></div>
+            <div id="msg"><p>Contactos</p></div>
+        </div>
+    </body>
+</html>
