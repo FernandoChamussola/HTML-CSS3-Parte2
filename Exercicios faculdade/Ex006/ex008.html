@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button{
+            height: 100px;
+            width: 150px;
+        }
+    </style>
+
+    <script>
+      function nome() {
+           let fruta = prompt("Digite o nome da fruta");
+           
+           switch (fruta) {
+            case 'banana':
+                alert('voce comprou banana');
+                break;
+             case 'maca':
+                alert('voce comprou maca');
+                break;
+            default:
+                alert('voce comprou uma fruta diferente de banana ou maca')
+                break;
+           }
+        }
+
+        
+    </script>
+</head>
+<body>
+    <h1>Frutas</h1>
+    <button onclick="nome();">Comprar frutas</button>
+    
+</body>
+</html>

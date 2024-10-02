@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button {
+            height: 100px;
+            width: 150px;
+        }
+        .mensagem {
+            color: red;
+            font-size: 24px;
+        }
+    </style>
+
+    <script>
+      function nome() {
+           let nome = prompt("Qual o nome do Aluno?");
+           let nota1 = Number(prompt("Digite a nota 1"));
+           let nota2 = Number(prompt("Digite a nota 2"));
+
+           document.getElementById('resu').innerHTML = "Calculando a média de <mark>" + nome + "</mark>";
+           document.getElementById('notas').innerHTML = "Tendo obtido as notas <mark>" + nota1 + "</mark> e <mark>" + nota2 + "</mark>";
+           let media = (nota1 + nota2) / 2;
+           document.getElementById('media').innerHTML = "A média final será <mark>" + media + "</mark>";
+            
+           if (media >= 10) {
+               document.getElementById('frase').innerHTML = '<span class="mensagem">Meus Parabéns!</span>';
+           } else {
+               document.getElementById('frase').innerHTML = '<span class="mensagem">Estude um pouco mais!</span>';
+           }
+      }
+    </script>
+</head>
+<body>
+    <h1 style="font-family: cursive;">Média do Aluno v2.0</h1>
+    <button onclick="nome();">Calcular média</button>
+    <p id="resu">O resultado vai aparecer aqui......</p>
+    <p id="notas"></p>
+    <p id="media"></p>
+    <p id="frase"></p>
+</body>
+</html>

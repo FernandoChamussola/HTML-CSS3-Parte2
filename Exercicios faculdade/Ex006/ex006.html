@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button{
+            height: 100px;
+            width: 150px;
+        }
+    </style>
+
+    <script>
+      function nome() {
+            let nr1 = Number(prompt('Digite um número'));
+            let nr2 = Number(prompt('Digite um número'));
+            imprimir(nr1, nr2);
+        }
+
+        function imprimir(nr1, nr2) {
+            document.getElementById('resu').innerHTML = "A soma de " + nr1 + " e " + nr2 + " é " + (nr1 + nr2);
+        }
+    </script>
+</head>
+<body>
+    <h1>Trabalhando com dados</h1>
+    <button onclick="nome();">Clique em mim!</button>
+    <p id="resu">O resultado vai aparecer aqui......</p>
+</body>
+</html>
