@@ -1,32 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        h1{
-            text-align: center;
-            text-size-adjust: initial;
+
+        *{
+            margin: 0;
+            padding:0;
         }
 
-        div{
-            margin: auto;
-            
+        body{
+        background-color: tomato;
+
         }
+       .conteiner{
+        display: flex;
+        justify-content: space-around;
+        align-items:center;
+        width: 100%;
+        height: 50px;
+        background-image: linear-gradient(blue , rgb(47, 47, 90));
+        
+        
+       }
+
+       .menu{
+        display: flex;
+        align-items: center;
+        color: white;
+       }
+
+       .menu:hover{
+        text-decoration: underline;
+        
+       }
+
+       .menu > a:active{
+        color: green;
+       }
+
+       .menu a{
+        text-decoration: none;
+        color: white;
+       }
+
+
+       .poema{
+        width: 300px;
+        height: 100%;
+        background-color: #ccc;
+        margin: auto;
+       }
+
+       .poema p{
+        text-align: center;
+        margin: 50px;
+       }
+
+       h1{
+        text-align: center;
+       }
     </style>
 </head>
 <body>
-<h1>Login</h1>
-<div>
-    <form action="index.html">
-        <label for="email">Digite o email:</label>
-        <input type="text"><br>
-        <label for="name">Digite o seu Nome:</label>
-        <input type="text"><br>
-        <input type="submit">
-
-    </form>
+<div class="conteiner">
+   <div class="menu"><a href="###">Alguma coisa</a></div>
+   <div class="menu"><a href="###">Alguma coisa</a></div>
+   <div class="menu"><a href="###">Alguma coisa</a></div>
+   <div class="menu"><a href="###">Alguma coisa</a></div>
 </div>
+
+<div class="poema">
+    <h1>Um poema simples</h1>
+    <p class="verso">No silêncio da noite calma,</p>
+    <p class="verso">Sinto o vento a sussurrar,</p>
+    <p class="verso">As estrelas no céu brilham,</p>
+    <p class="verso">Enquanto o mundo começa a sonhar.</p>
+    
+    <p class="verso">A lua observa tranquila,</p>
+    <p class="verso">Seu reflexo nas águas do mar,</p>
+    <p class="verso">E eu aqui, com pensamentos livres,</p>
+    <p class="verso">Deixo meu coração viajar.</p>
+    
+    <p class="autor">- Autor desconhecido</p>
+</div>
+
 </body>
 </html>
