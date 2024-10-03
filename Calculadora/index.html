@@ -83,13 +83,41 @@
     <script>
         function getConteudo(id) {
             let conteudo = document.getElementById(id).textContent;
+            switch (conteudo) {
+                case 'C':
+                document.getElementById('operacao').innerText ='';
+                    break;
+                case 'ON':
+                alert('Funcionalidade');
+                     break;
+                case 'M': 
+                alert('Funcionalidade');
+                break;
+                default:
+                    operacao(conteudo);
+                    break;
+            }
         }
 
         function operacao(conteudo) {
-            let operacao = document.getElementById('operacao');
-            operacao += conteudo;
+            let operacoes = document.getElementById('operacao').textContent;
+            
+            document.getElementById('operacao').innerText = operacoes + conteudo;
 
         }
+
+        function calcular() {
+    // Obter o conteúdo do parágrafo
+    let operacoes = document.getElementById('operacao').textContent;
+    
+    // Usar eval para calcular a expressão matemática
+    let resultado = eval(operacoes);
+    
+    // Guardar o resultado em uma variável ou exibi-lo
+   
+    document.getElementById('resultado').textContent =  resultado;  // Exibe no HTML
+}
+
 
 
 
@@ -99,8 +127,8 @@
     <div class="calculadora">
         <p style="text-align: center; color: black; font-style: bold; font-family: Arial, Helvetica, sans-serif;">CALC</p>
         <div class="display">
-          <p id="operacao">1+1</p>
-          <p id="resultado">2</p>
+          <p id="operacao"></p>
+          <p id="resultado"></p>
         </div>
 
         <div class="teclados">
@@ -135,7 +163,7 @@
          <div class="linha5">
             <div class="tl1" onclick="getConteudo(0);"><p id="0">0</p></div>
            <div class="tl1" onclick="getConteudo('abrirP');"><p id="abrirP">(</p></div>
-           <div class="tl1" onclick="getConteudo('igual');"><p id="igual">=</p></div>
+           <div class="tl1" onclick="calcular();"><p id="igual">=</p></div>
            <div class="tl1" onclick="getConteudo('mode');"><p id="mode">M</p></div>
          </div>
         <h1 style="text-align: center;">@FMAC</h1>
