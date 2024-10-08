@@ -11,11 +11,48 @@
             box-sizing: border-box;
             background-image: url(Imagem/Fundo.jpg);
             background-size: 100%;
+        }
+
+        .mensagem{
+            position: fixed;
+            left:100px ;
+            top: 30%;
+            width: 300px;
+            height: 300px;
+            text-justify: auto;
+            
+        }
+
+        .formulario{
+            display: flex;
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            top: 25%;
+            left: 65%;
+            background-color: rgba(139, 0, 139, 0.322);
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
             
         }
     </style>
 </head>
 <body>
+
     
+    <div class="mensagem">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati facilis magni vero soluta! Ipsum quos eius cupiditate repellat ducimus adipisci assumenda illum vero odio vel a animi aut, itaque sunt?</p>
+    </div>
+
+    <div class="formulario">
+        <form action="#">
+            <label for="name">Digite o seu Nome:</label><br>
+            <input type="text"><br>
+            <label for="senha">Digite sua senha:</label><br>
+            <input type="password"><br>
+            <button style="width: 100%; margin-top: 5px;">Entrar</button>
+        </form>
+    </div>
 </body>
 </html>
