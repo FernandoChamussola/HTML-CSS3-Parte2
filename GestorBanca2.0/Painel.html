@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .vendas, .itemVendido, .estoqueBaixo {
+            background-color: #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .vendas:hover, .itemVendido:hover, .estoqueBaixo:hover {
+            transform: scale(1.02);
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h2, h3, p {
+            text-align: center;
+            margin: 5px;
+            color: #333;
+        }
+
+        .nomeProduto {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .nomeProduto:hover {
+            background-color: #b31919;
+            box-shadow: 1px 1px red;
+            color: white;
+        }
+
+        .nomeProduto .unidade {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 600px) {
+            .vendas, .itemVendido, .estoqueBaixo {
+                width: 90%;
+            }
+
+            .nomeProduto {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nomeProduto .unidade {
+                margin-top: 5px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Painel</h1>
+   
+    <div class="container">
+        <div class="vendas">
+            <h2>Vendas Totais</h2>
+            <h3 id="vendasTot">100MT</h3>
+            <p id="tempo">Últimos 7 dias</p>
+        </div>
+
+        <div class="itemVendido">
+            <h2>Total Itens Vendidos</h2>
+            <h3 id="vendasTot">100</h3>
+            <p id="tempo">Últimos 7 dias</p>
+        </div>
+
+        <div class="estoqueBaixo">
+            <h2>Produtos em Estoque Baixo</h2>
+
+            <div class="nomeProduto">
+                <div class="nome"><p>Bolacha 15</p></div>
+                <div class="unidade"><p>2 unidades</p></div>
+            </div>
+
+            <div class="nomeProduto">
+                <div class="nome"><p>Doces</p></div>
+                <div class="unidade"><p>3 unidades</p></div>
+            </div>
+
+            <div class="nomeProduto">
+                <div class="nome"><p>Sabão</p></div>
+                <div class="unidade"><p>1 unidade</p></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
