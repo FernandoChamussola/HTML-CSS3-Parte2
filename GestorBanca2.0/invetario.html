@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .produtos {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .linha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .produto {
+            flex: 1;
+        }
+
+        .produtoNome {
+            font-size: 18px;
+            margin: 0;
+            color: #555;
+        }
+
+        .precoCaixa {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .editar button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .editar button:hover {
+            background-color: #0056b3;
+        }
+
+        .add-button {
+            display: block;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .add-button:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 600px) {
+            .linha {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .editar {
+                margin-top: 10px;
+            }
+
+            .produtoNome {
+                font-size: 16px;
+            }
+
+            .precoCaixa {
+                font-size: 14px;
+            }
+
+            .editar button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Inventário</h1>
+    
+    <div class="produtos">
+        <div class="linha">
+            <div class="produto">
+                <h3 class="produtoNome">Bolacha</h3>
+                <p class="precoCaixa">600MT Caixa</p>
+            </div>
+            <div class="editar">
+                <button>Editar</button>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div class="produto">
+                <h3 class="produtoNome">Chips</h3>
+                <p class="precoCaixa">350MT Caixa</p>
+            </div>
+            <div class="editar">
+                <button>Editar</button>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div class="produto">
+                <h3 class="produtoNome">Refresco</h3>
+                <p class="precoCaixa">600MT Caixa</p>
+            </div>
+            <div class="editar">
+                <button>Editar</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="add-button">Adicionar ao Inventário</button>
+</body>
+</html>
