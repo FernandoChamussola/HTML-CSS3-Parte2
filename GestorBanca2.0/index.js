@@ -15,3 +15,6 @@ function validar(codigo) {
         alert('Código não validado!');
     }
 }
+
+
+

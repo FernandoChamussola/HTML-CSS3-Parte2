@@ -94,7 +94,6 @@
             text-align: center;
         }
 
-        /* Estilo do botão de Vender */
         .vender-button {
             display: block;
             width: 100%;
@@ -114,73 +113,22 @@
             background-color: #218838;
         }
 
-        /* Responsividade para telas pequenas (celulares) */
-        @media (max-width: 768px) {
-            .pesquisa {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .icon {
-                margin-left: 0;
-                margin-top: 10px;
-                width: 100%;
-            }
-
-            .icon button {
-                width: 100%;
-                padding: 12px;
-            }
-
-            table {
-                width: 100%;
-                margin: 10px 0;
-            }
-
-            th, td {
-                padding: 10px;
-            }
-
-            td input[type="number"] {
-                width: 100%;
-                padding: 10px;
-            }
-
-            .vender-button {
-                padding: 12px;
-                font-size: 16px;
-            }
+        .resultados {
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: left;
         }
 
-        /* Responsividade para telas muito pequenas */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
+        .resultados p {
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
 
-            h1 {
-                font-size: 24px;
-            }
-
-            .texto input {
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            .icon button {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            th, td {
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            .vender-button {
-                font-size: 14px;
-                padding: 10px;
-            }
+        .resultados p:hover {
+            background-color: #e0e0e0;
         }
     </style>
 </head>
@@ -189,13 +137,15 @@
 
     <div class="pesquisa">
         <div class="texto">
-           <input type="text" placeholder="Digite o nome do Produto...">
+           <input type="text" id="pesquisaInput" placeholder="Digite o nome do Produto...">
         </div>
 
         <div class="icon">
-            <button>🔍</button>
+            <button onclick="pesquisarProduto()">🔍</button>
         </div>
     </div>
+
+    <div class="resultados" id="resultadosPesquisa"></div>
 
     <table>
         <thead>
@@ -204,16 +154,130 @@
                 <th>Quantidade</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>Bolacha de 20</td>
-                <td><input type="number" min="0"></td>
-            </tr>
+        <tbody id="tabelaVendas">
+            
         </tbody>
     </table>
 
     <!-- Botão "Vender" -->
-    <button class="vender-button">Vender</button>
+    <button class="vender-button" onclick="finalizarVenda()">Vender</button>
 
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script type="text/javascript">
+    emailjs.init("EP19jh0DCKyg2XVdW"); // Substitua pela sua User ID do EmailJS
+
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/126_nvJJ6-QfKP93g3VHolu7TWhMX6MM5HMRek6jRnxE/gviz/tq?tqx=out:json';
+
+    // Função para buscar o produto na planilha
+    async function pesquisarProduto() {
+        const pesquisa = document.getElementById('pesquisaInput').value.toLowerCase();
+        const response = await fetch(sheetURL);
+        const dataText = await response.text();
+        const jsonData = JSON.parse(dataText.substring(47).slice(0, -2));
+
+        const rows = jsonData.table.rows;
+        const resultados = document.getElementById('resultadosPesquisa');
+        resultados.innerHTML = '';
+
+        rows.forEach((row) => {
+            const nomeProduto = row.c[0].v.toLowerCase();
+
+            if (nomeProduto.includes(pesquisa)) {
+                const p = document.createElement('p');
+                p.textContent = nomeProduto.charAt(0).toUpperCase() + nomeProduto.slice(1); // Capitalizar primeira letra
+                p.onclick = () => adicionarProduto(nomeProduto);
+                resultados.appendChild(p);
+            }
+        });
+    }
+
+    // Função para adicionar o produto à tabela de venda
+    function adicionarProduto(nomeProduto) {
+        const tabelaVendas = document.getElementById('tabelaVendas');
+
+        const novaLinha = document.createElement('tr');
+        const nomeTd = document.createElement('td');
+        nomeTd.textContent = nomeProduto;
+        
+        const quantidadeTd = document.createElement('td');
+        const inputQuantidade = document.createElement('input');
+        inputQuantidade.type = 'number';
+        inputQuantidade.min = '0';
+        quantidadeTd.appendChild(inputQuantidade);
+
+        novaLinha.appendChild(nomeTd);
+        novaLinha.appendChild(quantidadeTd);
+        tabelaVendas.appendChild(novaLinha);
+    }
+
+    // Função para finalizar a venda e salvar no localStorage
+    function finalizarVenda() {
+        const vendas = [];
+        const tabela = document.getElementById('tabelaVendas');
+        const linhas = tabela.getElementsByTagName('tr');
+
+        for (let i = 0; i < linhas.length; i++) {
+            const nomeProduto = linhas[i].getElementsByTagName('td')[0].textContent;
+            const quantidade = linhas[i].getElementsByTagName('input')[0].value;
+
+            if (quantidade > 0) {
+                vendas.push({ produto: nomeProduto, quantidade });
+            }
+        }
+
+        // Obter vendas anteriores do localStorage
+        const vendasAnteriores = JSON.parse(localStorage.getItem('vendasDiarias') || "[]");
+        const vendasTotais = vendasAnteriores.concat(vendas); // Combinar vendas anteriores com as novas
+
+        // Armazenar todas as vendas no localStorage
+        localStorage.setItem('vendasDiarias', JSON.stringify(vendasTotais));
+
+        alert("Venda salva com sucesso!");
+    }
+
+    // Função para gerar mensagem de e-mail com os dados de venda
+    function gerarMensagemVenda() {
+        const vendas = JSON.parse(localStorage.getItem('vendasDiarias') || "[]");
+        let mensagem = "Relatório de Vendas Diárias:\n\n";
+
+        vendas.forEach(venda => {
+            mensagem += `Produto: ${venda.produto}, Quantidade: ${venda.quantidade}\n`;
+        });
+
+        return mensagem;
+    }
+
+    // Função para enviar os dados de venda por e-mail
+    function enviarEmail() {
+        const mensagemVenda = gerarMensagemVenda();
+
+        const templateParams = {
+            to_email: "chamussolafernando006@gmail.com", // Substitua pelo seu e-mail
+            subject: "Relatório de Vendas Diárias",
+            mensagem: mensagemVenda // Corrigi o campo de mensagem para ser enviado corretamente
+        };
+
+        emailjs.send("service_pv9l79m", "template_md7n8b7", templateParams)
+            .then(response => {
+                alert("E-mail enviado com sucesso!");
+                localStorage.clear(); // Limpar o localStorage após o envio
+            }, error => {
+                console.error("Erro ao enviar o e-mail:", error);
+                alert("Erro ao enviar o e-mail. Tente novamente.");
+            });
+    }
+
+    // Função para verificar se é 21h e enviar o e-mail
+    function verificarHoraEnvio() {
+        const agora = new Date();
+        if (agora.getHours() === 21 && agora.getMinutes() === 0) {
+            enviarEmail();
+        }
+    }
+
+    // Verificar a hora a cada minuto
+    setInterval(verificarHoraEnvio, 60000);
+    </script>
 </body>
 </html>
