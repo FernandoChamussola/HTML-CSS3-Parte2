@@ -130,10 +130,31 @@
         .resultados p:hover {
             background-color: #e0e0e0;
         }
+
+        /* Novo estilo para o botão "Publicar Relatório" */
+        .publish-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .publish-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <h1>Vender</h1>
+
+    <!-- Botão "Publicar Relatório" -->
+    <button class="publish-button" onclick="publicarRelatorio()">Publicar Relatório</button>
 
     <div class="pesquisa">
         <div class="texto">
@@ -168,6 +189,25 @@
     emailjs.init("EP19jh0DCKyg2XVdW"); // Substitua pela sua User ID do EmailJS
 
     const sheetURL = 'https://docs.google.com/spreadsheets/d/126_nvJJ6-QfKP93g3VHolu7TWhMX6MM5HMRek6jRnxE/gviz/tq?tqx=out:json';
+
+    // IndexedDB setup
+    let db;
+    const request = indexedDB.open("VendasDB", 1);
+
+    request.onupgradeneeded = (event) => {
+        db = event.target.result;
+        if (!db.objectStoreNames.contains("vendas")) {
+            db.createObjectStore("vendas", { keyPath: "id", autoIncrement: true });
+        }
+    };
+
+    request.onsuccess = (event) => {
+        db = event.target.result;
+    };
+
+    request.onerror = (event) => {
+        console.error("Erro ao abrir o IndexedDB:", event.target.errorCode);
+    };
 
     // Função para buscar o produto na planilha
     async function pesquisarProduto() {
@@ -211,73 +251,77 @@
         tabelaVendas.appendChild(novaLinha);
     }
 
-    // Função para finalizar a venda e salvar no localStorage
+    // Função para finalizar a venda e salvar no IndexedDB
     function finalizarVenda() {
-        const vendas = [];
         const tabela = document.getElementById('tabelaVendas');
         const linhas = tabela.getElementsByTagName('tr');
+
+        const transaction = db.transaction(["vendas"], "readwrite");
+        const store = transaction.objectStore("vendas");
 
         for (let i = 0; i < linhas.length; i++) {
             const nomeProduto = linhas[i].getElementsByTagName('td')[0].textContent;
             const quantidade = linhas[i].getElementsByTagName('input')[0].value;
 
             if (quantidade > 0) {
-                vendas.push({ produto: nomeProduto, quantidade });
+                store.add({ produto: nomeProduto, quantidade: quantidade });
             }
         }
 
-        // Obter vendas anteriores do localStorage
-        const vendasAnteriores = JSON.parse(localStorage.getItem('vendasDiarias') || "[]");
-        const vendasTotais = vendasAnteriores.concat(vendas); // Combinar vendas anteriores com as novas
-
-        // Armazenar todas as vendas no localStorage
-        localStorage.setItem('vendasDiarias', JSON.stringify(vendasTotais));
-
-        alert("Venda salva com sucesso!");
+        alert("Venda salva com sucesso no IndexedDB!");
     }
 
-    // Função para gerar mensagem de e-mail com os dados de venda
+    // Função para gerar a mensagem de e-mail com os dados do IndexedDB
     function gerarMensagemVenda() {
-        const vendas = JSON.parse(localStorage.getItem('vendasDiarias') || "[]");
-        let mensagem = "Relatório de Vendas Diárias:\n\n";
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(["vendas"], "readonly");
+            const store = transaction.objectStore("vendas");
 
-        vendas.forEach(venda => {
-            mensagem += `Produto: ${venda.produto}, Quantidade: ${venda.quantidade}\n`;
+            const vendas = [];
+            store.openCursor().onsuccess = (event) => {
+                const cursor = event.target.result;
+                if (cursor) {
+                    vendas.push(cursor.value);
+                    cursor.continue();
+                } else {
+                    let mensagem = 'Resumo de Vendas:\n\n';
+                    vendas.forEach((venda) => {
+                        mensagem += `Produto: ${venda.produto}, Quantidade: ${venda.quantidade}\n`;
+                    });
+                    resolve(mensagem);
+                }
+            };
+
+            store.openCursor().onerror = (event) => {
+                reject("Erro ao acessar o banco de dados IndexedDB.");
+            };
         });
-
-        return mensagem;
     }
 
-    // Função para enviar os dados de venda por e-mail
-    function enviarEmail() {
-        const mensagemVenda = gerarMensagemVenda();
+    // Função para esvaziar o IndexedDB
+    function limparVendas() {
+        const transaction = db.transaction(["vendas"], "readwrite");
+        const store = transaction.objectStore("vendas");
+        store.clear();
+    }
 
+    // Função para enviar o relatório por e-mail e esvaziar o banco de dados
+    async function publicarRelatorio() {
+        const mensagem = await gerarMensagemVenda();
         const templateParams = {
-            to_email: "chamussolafernando006@gmail.com", // Substitua pelo seu e-mail
-            subject: "Relatório de Vendas Diárias",
-            mensagem: mensagemVenda // Corrigi o campo de mensagem para ser enviado corretamente
+            mensagem: mensagem,
         };
 
         emailjs.send("service_pv9l79m", "template_md7n8b7", templateParams)
-            .then(response => {
-                alert("E-mail enviado com sucesso!");
-                localStorage.clear(); // Limpar o localStorage após o envio
-            }, error => {
-                console.error("Erro ao enviar o e-mail:", error);
-                alert("Erro ao enviar o e-mail. Tente novamente.");
+            .then(() => {
+                alert("Relatório enviado com sucesso!");
+                limparVendas(); // Limpar o banco de dados após o envio
+            })
+            .catch((error) => {
+                console.error("Erro ao enviar o relatório:", error);
+                alert("Erro ao enviar o relatório.");
             });
     }
-
-    // Função para verificar se é 21h e enviar o e-mail
-    function verificarHoraEnvio() {
-        const agora = new Date();
-        if (agora.getHours() === 21 && agora.getMinutes() === 0) {
-            enviarEmail();
-        }
-    }
-
-    // Verificar a hora a cada minuto
-    setInterval(verificarHoraEnvio, 60000);
     </script>
 </body>
 </html>

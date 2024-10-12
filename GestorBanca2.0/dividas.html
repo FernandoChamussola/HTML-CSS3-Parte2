@@ -75,22 +75,24 @@
             border-radius: 8px;
         }
 
-       form{ width: 100%;
+        form {
+            width: 100%;
             max-width: 600px;
             margin: 20px auto;
-            border-collapse: collapse;
             background-color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+        }
 
-       }
+        form input {
+            width: 95%;
+            height: 40px;
+            border-radius: 8px;
+            margin: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
 
-       form input{
-        width: 95%;
-        height: 40px;
-        border-radius: 8px;
-        margin: 5px;
-       }
         th, td {
             padding: 15px;
             text-align: left;
@@ -110,7 +112,6 @@
             text-align: center;
         }
 
-        /* Estilo do botão de Vender */
         .vender-button {
             display: block;
             width: 100%;
@@ -130,7 +131,6 @@
             background-color: #218838;
         }
 
-        /* Responsividade para telas pequenas (celulares) */
         @media (max-width: 768px) {
             .pesquisa {
                 flex-direction: column;
@@ -168,7 +168,6 @@
             }
         }
 
-        /* Responsividade para telas muito pequenas */
         @media (max-width: 480px) {
             body {
                 padding: 10px;
@@ -205,11 +204,11 @@
 
     <div class="pesquisa">
         <div class="texto">
-           <input type="text" placeholder="Digite o nome do Produto...">
+           <input type="text" placeholder="Digite o nome do Produto..." id="pesquisaInput">
         </div>
 
         <div class="icon">
-            <button>🔍</button>
+            <button onclick="pesquisarProduto()">🔍</button>
         </div>
     </div>
 
@@ -222,22 +221,100 @@
                 <th>Quantidade</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>Bolacha de 20</td>
-                <td><input type="number" min="0"></td>
-            </tr>
+        <tbody id="tabelaVendas">
+            
         </tbody>
     </table>
 
-    <form action="dividas.html">
-        <input type="text" placeholder="Digite o Nome do cliente..."><br>
-        <input type="number" placeholder="Digite o contacto..." maxlength="9">
+    <form>
+        <input type="text" id="nomeCliente" placeholder="Digite o Nome do cliente..." required><br>
+        <input type="number" id="contatoCliente" placeholder="Digite o contacto..." maxlength="9" required>
     </form>
 
+    <button class="vender-button" onclick="publicarRelatorio()">Dever</button>
 
-    <!-- Botão "Vender" -->
-    <button class="vender-button">Dever</button>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
+    <script type="text/javascript">
+    emailjs.init("EP19jh0DCKyg2XVdW"); // Substitua pela sua User ID do EmailJS
+
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/126_nvJJ6-QfKP93g3VHolu7TWhMX6MM5HMRek6jRnxE/gviz/tq?tqx=out:json';
+
+    async function pesquisarProduto() {
+        const pesquisa = document.getElementById('pesquisaInput').value.toLowerCase();
+        const response = await fetch(sheetURL);
+        const dataText = await response.text();
+        const jsonData = JSON.parse(dataText.substring(47).slice(0, -2));
+
+        const rows = jsonData.table.rows;
+        const resultados = document.getElementById('Produto');
+        resultados.innerHTML = '';
+
+        rows.forEach((row) => {
+            const nomeProduto = row.c[0].v.toLowerCase();
+
+            if (nomeProduto.includes(pesquisa)) {
+                const p = document.createElement('p');
+                p.textContent = nomeProduto.charAt(0).toUpperCase() + nomeProduto.slice(1);
+                p.onclick = () => adicionarProduto(nomeProduto);
+                resultados.appendChild(p);
+            }
+        });
+    }
+
+    function adicionarProduto(nomeProduto) {
+        const tabelaVendas = document.getElementById('tabelaVendas');
+
+        const novaLinha = document.createElement('tr');
+        const nomeTd = document.createElement('td');
+        nomeTd.textContent = nomeProduto;
+        
+        const quantidadeTd = document.createElement('td');
+        const inputQuantidade = document.createElement('input');
+        inputQuantidade.type = 'number';
+        inputQuantidade.min = '0';
+        quantidadeTd.appendChild(inputQuantidade);
+
+        novaLinha.appendChild(nomeTd);
+        novaLinha.appendChild(quantidadeTd);
+        tabelaVendas.appendChild(novaLinha);
+    }
+
+    function publicarRelatorio() {
+        const tabela = document.getElementById('tabelaVendas');
+        const linhas = tabela.getElementsByTagName('tr');
+        const nomeCliente = document.getElementById('nomeCliente').value;
+        const contatoCliente = document.getElementById('contatoCliente').value;
+
+        let produtosDevidos = "";
+
+        for (let i = 0; i < linhas.length; i++) {
+            const nomeProduto = linhas[i].getElementsByTagName('td')[0].textContent;
+            const quantidade = linhas[i].getElementsByTagName('input')[0].value;
+
+            if (quantidade > 0) {
+                produtosDevidos += `Produto: ${nomeProduto}, Quantidade: ${quantidade}\n`;
+            }
+        }
+         let sms = "Divida feita por \n" + nomeCliente + "\n";
+         let nr = "Contato: \n" + contatoCliente + "\n";
+         let traco = "------------------------------------" + "\n";
+
+
+        const templateParams = {
+            mensagem: sms + nr + traco + produtosDevidos,
+            
+
+        };
+
+        emailjs.send("service_pv9l79m", "template_md7n8b7", templateParams)
+            .then(function(response) {
+                console.log('Email enviado com sucesso!', response.status, response.text);
+                alert("Relatório enviado por email!");
+            }, function(error) {
+                console.log('Falha ao enviar o email...', error);
+            });
+    }
+    </script>
 </body>
 </html>
